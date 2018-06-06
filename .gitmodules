@@ -1,0 +1,3 @@
+[submodule "aad-pod-identity"]
+	path = aad-pod-identity
+	url = https://github.com/Azure/aad-pod-identity

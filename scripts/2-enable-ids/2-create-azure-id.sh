@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+
+if [ -z "$RG" ]
+then
+      echo "Resource Group Name Not Set. Set the env variable with the following command:"
+      echo "export RG = \"rg-name\" "
+      return 1
+fi
+
+set -x
+
+
+
+az identity create --name podId --resource-group $RG

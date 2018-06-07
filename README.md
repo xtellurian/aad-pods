@@ -31,7 +31,7 @@ You can follow the scripts, in order, in `/scripts/1-init-aks`
 
 ```./scripts/1-init-aks/1-azure-provider-registration.sh```
 
-AKS requires the following resources: Microsoft.Network, Microsoft.Storage, Microsoft.Compute, Microsoft.ContainerService. Register them on your subscription with the following script.
+AKS requires the following resources: Microsoft.Network, Microsoft.Storage, Microsoft.Compute, Microsoft.ContainerService. Register them on your subscription with the above script.
 
 
 #### 2. Create a Resource Group
@@ -75,9 +75,10 @@ The following script installs three [custom resource definitions](https://kubern
 ```./scripts/2-config-aks/1-install-crd.sh```
 
 The three CRDs are:
- -azureAssignedIdentity: Do not create these, they will be auto-created by the azureIdentityController
- -azureIdentityBinding: Binds pods to an Azure Id.  You will create these.
- -azureIdentity: Provides the cluster with the ability to assign an identity to a pod. You will create these.
+
+- azureAssignedIdentity: Do not create these, they will be auto-created by the azureIdentityController
+- azureIdentityBinding: Binds pods to an Azure Id.  You will create these.
+- azureIdentity: Provides the cluster with the ability to assign an identity to a pod. You will create these.
 
 
 #### 2. Deploy the required infrastructure on the cluster
@@ -111,9 +112,9 @@ Edit the script with the correct Resource Group name then run it as below
 
 The `/demo/demo.deployment.yaml` describes the pod that will be deployed. You need to set the following args for the demo pod:
 
- -subscriptionid: Id of your Azure Subscription
- -clientid: From the Azure Id you created in the step above
- -resourcegroup: From the Azure Id you created above
+- subscriptionid: Id of your Azure Subscription
+- clientid: From the Azure Id you created in the step above
+- resourcegroup: From the Azure Id you created above
 
 Now run the following to deploy the demo
 
@@ -123,10 +124,10 @@ Now run the following to deploy the demo
 
 We need to tell the cluster about the Id we created, so it can bind it to the pod, which happens in the next step. To do that, we will deploy the spec found in `/deploy/aadpodidentity.yaml`. You need to set the following values in that file:
 
- -metadata->name: A unique name we will use in the next step to reference this Id.
- -type: 0=Azure Identity; 1=Service Principal. You should set it to 0.
- -ResourceID: subscriptionId, resource group, and id name. You can find this full string by running `az identity list` and looking at the `id` field.
- -ClientID: Client Id of the Azure ID. You can find this full string by running `az identity list` and looking at the `clientId` field.
+- metadata->name: A unique name we will use in the next step to reference this Id.
+- type: 0=Azure Identity; 1=Service Principal. You should set it to 0.
+- ResourceID: subscriptionId, resource group, and id name. You can find this full string by running `az identity list` and looking at the `id` field.
+- ClientID: Client Id of the Azure ID. You can find this full string by running `az identity list` and looking at the `clientId` field.
 
 Once those values are set, you can deploy the identity with the following
 
@@ -138,8 +139,8 @@ Last thing we need to do is bind the Id we created in step 1, and deployed in st
 
 Edit the file `/deploy/aadpodidentitybinding.yaml` with the following values:
 
- -azureIdentity: the name for the AzureIdentity you deployed in the previous step.
- -selector: in our case, keep the value as `demo`.
+- azureIdentity: the name for the AzureIdentity you deployed in the previous step.
+- selector: in our case, keep the value as `demo`.
 
 Deploy the binding with the following
 

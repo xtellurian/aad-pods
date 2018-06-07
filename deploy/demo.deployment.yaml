@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: demo
+    aadpodidbinding: demo
+  name: demo
+  namespace: default
+spec:
+  template:
+    metadata:
+      labels:
+        app: demo
+        aadpodidbinding: demo
+    spec:
+      containers:
+      - name: demo
+        image: "nikhilbh/demo:1.0"
+        imagePullPolicy: Always
+        args:
+          - "--subscriptionid=c5760548-23c2-4223-b41e-5d68a8320a0c"
+          - "--clientid=a40e83f9-6198-4633-afae-d860eb5b7f7c"
+          - "--resourcegroup=MC_k8s-test_clusterFrank_eastus"
+        env:
+        - name: MY_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: MY_POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: MY_POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP

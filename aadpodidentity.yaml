@@ -1,8 +1,0 @@
-apiVersion: "aadpodidentity.k8s.io/v1"
-kind: AzureIdentity
-metadata:
- name: podid
-spec:
- type: 1
- ResourceID: /subscriptions/c5760548-23c2-4223-b41e-5d68a8320a0c/resourcegroups/k8s-test/providers/Microsoft.ManagedIdentity/userAssignedIdentities/podId
- ClientID: cfa17676-111c-4047-9fd7-aeaa850f1276

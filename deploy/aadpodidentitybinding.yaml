@@ -1,7 +1,7 @@
 apiVersion: "aadpodidentity.k8s.io/v1"
 kind: AzureIdentityBinding
 metadata:
- name: fuckshit
+ name: myIdBinding
 spec:
  AzureIdentity: podid
  Selector: demo

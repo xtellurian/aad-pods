@@ -208,6 +208,41 @@ time="2018-06-07T01:32:30Z" level=info msg="succesfully made GET on instance met
 
 ```
 
+### Video
+
+[![Video of Running required commands](https://img.youtube.com/vi/BXhIMJYDO4w/0.jpg)](https://www.youtube.com/watch?v=BXhIMJYDO4w)
+
+## Continuous Deployment with VSTS
+
+### Configure Kubernetes Connection
+
+Give VSTS permission to use your Kubernetes cluster by adding the endpoint to your project. Click the Cog Wheel, and go to Services. Add a new endpoint, and choose Kubernetes.
+
+![Screenshot of Kubernetes Endpoint config in VSTS](images/k8s-endpoint-vsts.png)
+
+### Release Definition
+
+Create a new empty Release Definition, and add this repository and a source with alias `_aad_pods`
+
+Add a Task of type 'Deploy to Kubernetes'. Create one of these tasks for each of the following:
+
+> The command of each is `apply`, and the each below shows the reqired arguments.
+
+- `-f _aad-pods/aad-pod-identity/deploy/infra/deployment.yaml`
+- `-f _aad-pods/aad-pod-identity/crd/azureAssignedIdentityCrd.yaml`
+- `-f _aad-pods/aad-pod-identity/crd/azureIdentityBindingCrd.yaml`
+- `-f _aad-pods/aad-pod-identity/crd/azureIdentityCrd.yaml`
+- `-f _aad-pods/deploy/demo.deployment.yaml`
+- `-f _aad-pods/deploy/aadpodidentity.yaml`
+- `-f _aad-pods/deploy/aadpodidentitybinding.yaml`
+
+The result should look like this
+
+![Screenshot of VSTS tasks](images/vsts-deploy-tasks.png)
+
+### Customising each Deployment
+
+You probably don't want to deploy the same Demo every time. To customise the Kubernetes deployment, use the [YAML Writer](https://marketplace.visualstudio.com/items?itemName=jakkaj.vsts-yaml-writer) extension, and edit the values in the YAML files.
 
 ## Project Structure
 
